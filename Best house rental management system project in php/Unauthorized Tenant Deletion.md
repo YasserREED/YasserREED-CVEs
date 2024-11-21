@@ -9,7 +9,6 @@
 - **Tested On**: Apache/2.4.54 (Win64) OpenSSL/1.1.1p PHP/8.1.12  
 - **CVE**: Reported, waiting for CVE number  
 
-
 ### **Description**
 
 The `/rental/ajax.php?action=delete_tenant` endpoint in the **Best House Rental Management System Project in PHP v1.0** is vulnerable to unauthorized tenant deletion. This occurs because the application does not validate user authentication or authorization before processing the deletion request. An attacker can exploit this vulnerability to delete any tenant by sending a specially crafted POST request with the tenant ID.
@@ -48,7 +47,6 @@ An attacker can delete any tenant record without authentication or authorization
 - Loss of critical tenant data.
 - Disruption of business operations.
 - Financial losses and reputational damage to the organization.
-
 
 ### **Remediation**
 
