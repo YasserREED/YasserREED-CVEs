@@ -82,3 +82,19 @@ This can lead to:
 * Theft of session cookies or user credentials.
 * Unauthorized actions on behalf of users.
 * Malicious redirection or delivery of malicious content.
+
+### **Remediation**
+
+### Remediation for Stored XSS
+
+1. **Input Validation and Sanitization**:  
+   Validate and sanitize all user inputs on the server side to ensure they do not include malicious scripts or HTML content. Use a whitelist approach and strip any unnecessary tags or attributes.
+
+2. **Output Encoding**:  
+   Always encode dynamic content before rendering it in the browser, using context-specific encoding methods (e.g., HTML encoding for page content, JavaScript escaping for scripts).
+
+3. **Content Security Policy (CSP)**:  
+   Implement a Content Security Policy to restrict the execution of unauthorized scripts and reduce the impact of potential XSS attacks. For example:
+```sh
+   Content-Security-Policy: default-src 'self'; script-src 'self';
+```
