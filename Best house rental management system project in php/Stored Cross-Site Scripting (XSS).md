@@ -1,6 +1,6 @@
-### **Best House Rental Management System XSS Vulnerability**
+### **Best House Rental Management System Stored Cross-Site Scripting (XSS) Vulnerability**
 
-- **Exploit Title**: Best House Rental Management System Project in PHP XSS Vulnerability  
+- **Exploit Title**: Best House Rental Management System Project in PHP Stored Cross-Site Scripting (XSS) Vulnerability  
 - **Exploit Author**: Yasser Alshammari
 - **Vendor Homepage**: [SourceCodester](https://www.sourcecodester.com/php/17375/best-courier-management-system-project-php.html)  
 - **Software Link**: [Download Here](https://www.sourcecodester.com/download-code?nid=17375&title=Best+house+rental+management+system+project+in+php+)  
