@@ -1,15 +1,15 @@
 # Vanderlande OpenAIR Baggage 360 Vulnerability - Stored Cross-Site Scripting (XSS)
 
-**Exploit Title:** Stored XSS in Messages enables cross-user script execution  
+**Exploit Title:** Stored XSS in Messages enables cross-user script execution <br>
+**Severity:** **High 7.1**<br>
 **Exploit Author:** Yasser Alshammari (YasserREED)  
 **Vendor Homepage:** https://www.vanderlande.com/  
 **Product Page:** https://www.vanderlande.com/software/baggage-360/  
 **Version:** Observed on **Baggage 360 v7.0.0** (earlier versions may be affected)  
-**Tested On:** Web application (OpenAIR platform), authenticated user context  
-**CVE:** Reported via VulDB, pending assignment  
-**Severity:** **High 7.1** 
-
-**CVSS Vector:** `CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N`  
+**Tested On:** Web application (OpenAIR platform), authenticated user context    
+CWE: CWE-79 (Improper Neutralization of Input During Web Page Generation - XSS)
+<br>**CVSS Vector:** `CVSS:3.1/AV:N/AC:L/PR:L/UI:N/S:U/C:H/I:L/A:N`  
+**CVE:** Reported via VulDB, pending assignment
 
 ## Description
 
@@ -17,7 +17,7 @@ The endpoint **`POST /api-addons/v1/messages`** in **Vanderlande OpenAIR Baggage
 
 Because the **Bags** screen supports **bulk selection** and **Add Message**, a single request can attach the malicious content to **many bag tags at once**, causing wide impact across users who view those bag journeys.
 
-### HTTP Proof of Concept (PoC)
+## HTTP Proof of Concept (PoC)
 ```http
 POST /api-addons/v1/messages HTTP/2
 Host: example.com
@@ -28,7 +28,7 @@ Cookie: <Cookie Session>
 {
   "messageObjects": [
     {
-      "message": "<p><img src=x onerror=alert(document.cookie)></p>", // <== Add XSS payload here
+      "message": "<p><img src=x onerror=alert(document.cookie)></p>",  <== Add XSS payload here
       "type": "BAG",
       "messageType": "FREE_FORM",
       "entityId": "<bag-id>"
@@ -37,14 +37,14 @@ Cookie: <Cookie Session>
 }
 ```
 
-### Affected Endpoint
+## Affected Endpoint
 
 POST `/api-addons/v1/messages` (message creation)
 
-### Steps to Reproduce
+## Steps to Reproduce
 
 1. Sign in with a user who can view bag details.
-2. Navigate to Bags → [bag tag] → Interterm Bag Journey Details → Messages.
+2. Navigate to `Bags → [bag tag] → Interterm Bag Journey Details → Messages`.
 3. Start adding a message (type any text) and intercept the request (e.g., via a proxy).
 4. Replace the message body with an XSS payload inside `<p>` tags, e.g. `<p><img src=x onerror=alert(document.cookie)></p>`.
 5. Forward/submit the request.
@@ -55,9 +55,9 @@ POST `/api-addons/v1/messages` (message creation)
 
 ## Impact
 - **Code execution:** JavaScript runs in the app context when users view affected bag messages.
-- **Data exposure:** Read DOM data; if cookies aren’t `HttpOnly`, `document.cookie` theft is possible.
+- **Data exposure:** Access DOM data and session hijacking via `document.cookie`.
 - **Unauthorized actions:** Script can trigger privileged UI flows as the victim.
-- **Widespread effect:** Bulk “Add Message” lets one payload hit many bag records at once.
+- **Widespread effect:** Bulk `Add Message` lets one payload hit many bag records at once.
 
 ## Remediation
 
